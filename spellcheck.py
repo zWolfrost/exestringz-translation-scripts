@@ -8,7 +8,7 @@ TRANSLATION_FILEPATH = "../translation.json"
 SPELLCHECK_FILEPATH = "../spellcheck.txt"
 
 try:
-	translation, translation_settings = get_translation(TRANSLATION_FILEPATH)[0]
+	translation, translation_settings = get_translation(TRANSLATION_FILEPATH)
 except FileNotFoundError as e:
 	print(f"File '{e.filename}' not found.")
 	exit(1)
