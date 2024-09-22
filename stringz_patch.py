@@ -1,6 +1,6 @@
 # This script allows you to create the "stringz_patch.txt" file,
 # starting from the "stringz_full.txt" file (all the game strings) and the "translation.json" file (the translations of the strings).
-from utils import get_stringz_full, get_translation, replace_with_table
+from utils import get_stringz_full, get_translation, slice_offsets, replace_with_table
 
 
 # Open the files
@@ -42,7 +42,7 @@ with open(STRINGZ_PATCH_FILEPATH, 'a', encoding='utf-8') as stringz_patch:
 			print(f"The following line is out of order:\n{line}\n")
 			continue
 
-		offsets = replace_with_table(stringz_offsets[stringz_index], translation_settings.get("offset_replace", {}))
+		offsets = slice_offsets(stringz_offsets[stringz_index], *translation_settings.get("offsets_slice", {}).get(line, []))
 		line_translated = replace_with_table(translation[line], translation_settings.get("string_replace", {}))
 
 		stringz_patch.write('\n' + offsets + '\n' + line_translated)

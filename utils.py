@@ -24,6 +24,13 @@ def get_translation(filepath: str) -> tuple[dict[str, str], dict[str, str]]:
 
 	return translation, settings
 
+def slice_offsets(offsets: str, start = None, end = None) -> str:
+	if start is None and end is None:
+		return offsets
+	offsets_beg, offsets = offsets.split('-', 1)
+	offsets, offsets_end = offsets.rsplit('___', 1)
+	return f"{offsets_beg}-{'-'.join(offsets[start:end])}___{offsets_end}"
+
 def replace_with_table(string: str, table: dict[str, str]) -> str:
 	for key, value in table.items():
 		string = string.replace(key, value)
