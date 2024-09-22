@@ -23,7 +23,6 @@ def get_translation(filepath: str) -> tuple[dict[str, str], dict[str, str]]:
 	del translation[""]
 
 	return translation, settings
-	
 
 def replace_with_table(string: str, table: dict[str, str]) -> str:
 	for key, value in table.items():
