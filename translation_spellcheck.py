@@ -6,7 +6,7 @@ from utils import get_translation
 
 # Open the files
 TRANSLATION_FILEPATH = "./translation.json"
-SPELLCHECK_FILEPATH = "./spellcheck.txt"
+TRANSLATION_SPELLCHECK_FILEPATH = "./translation_spellcheck.txt"
 
 try:
 	translation, translation_settings = get_translation(TRANSLATION_FILEPATH)
@@ -17,7 +17,7 @@ except FileNotFoundError as e:
 
 # Find spelling and grammar errors
 lang = LanguageTool(translation_settings["to_language"])
-with open(SPELLCHECK_FILEPATH, 'a', encoding='utf-8') as spellcheck:
+with open(TRANSLATION_SPELLCHECK_FILEPATH, 'a', encoding='utf-8') as spellcheck:
 	spellcheck.truncate(0)
 	for line in translation.values():
 		line_clean = re.sub(translation_settings.get("dialog_remove_pattern", ""), "", line)
@@ -26,4 +26,4 @@ with open(SPELLCHECK_FILEPATH, 'a', encoding='utf-8') as spellcheck:
 
 		print(round(list(translation.values()).index(line) / len(translation) * 100), end='%\r')
 
-print(f"Saved in '{SPELLCHECK_FILEPATH}'.")
+print(f"Saved in '{TRANSLATION_SPELLCHECK_FILEPATH}'.")

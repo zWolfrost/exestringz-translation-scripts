@@ -1,19 +1,19 @@
-import json, re
+import json
 
-def get_stringz_full(filepath: str) -> tuple[list[str], list[str]]:
-	with open(filepath, 'r', encoding='utf-8', errors='ignore') as stringz_full:
-		stringz_offsets = []
-		stringz_lines = []
-		for line in stringz_full:
+def get_strindex_full(filepath: str) -> tuple[list[str], list[str]]:
+	with open(filepath, 'r', encoding='utf-8', errors='ignore') as strindex_full:
+		strindex_offsets = []
+		strindex_lines = []
+		for line in strindex_full:
 			line = line[:-1]
 			if line.startswith('_' * 80):
-				stringz_offsets.append(line)
-				stringz_lines.append(None)
-			elif stringz_lines[-1] is None:
-				stringz_lines[-1] = line
+				strindex_offsets.append(line)
+				strindex_lines.append(None)
+			elif strindex_lines[-1] is None:
+				strindex_lines[-1] = line
 			else:
-				stringz_lines[-1] += '\n' + line
-	return stringz_offsets, stringz_lines
+				strindex_lines[-1] += '\n' + line
+	return strindex_offsets, strindex_lines
 
 def get_translation(filepath: str) -> tuple[dict[str, str], dict[str, str]]:
 	with open(filepath, 'r', encoding='utf-8') as f:
