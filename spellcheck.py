@@ -5,8 +5,8 @@ from utils import get_translation
 
 
 # Open the files
-TRANSLATION_FILEPATH = "../translation.json"
-SPELLCHECK_FILEPATH = "../spellcheck.txt"
+TRANSLATION_FILEPATH = "./translation.json"
+SPELLCHECK_FILEPATH = "./spellcheck.txt"
 
 try:
 	translation, translation_settings = get_translation(TRANSLATION_FILEPATH)

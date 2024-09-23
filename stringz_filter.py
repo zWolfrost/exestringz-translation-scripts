@@ -6,9 +6,9 @@ from utils import get_stringz_full, get_translation
 
 
 # Open the files
-TRANSLATION_FILEPATH = "../translation.json"
-STRINGZ_FULL_FILEPATH = "../stringz_full.txt"
-STRINGZ_FILTER_FILEPATH = "../stringz_filter.txt"
+TRANSLATION_FILEPATH = "./translation.json"
+STRINGZ_FULL_FILEPATH = "./stringz_full.txt"
+STRINGZ_FILTER_FILEPATH = "./stringz_filter.txt"
 
 try:
 	translation, translation_settings = get_translation(TRANSLATION_FILEPATH)

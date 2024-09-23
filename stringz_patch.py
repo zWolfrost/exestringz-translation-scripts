@@ -4,9 +4,9 @@ from utils import get_stringz_full, get_translation, slice_offsets, replace_with
 
 
 # Open the files
-TRANSLATION_FILEPATH = "../translation.json"
-STRINGZ_FULL_FILEPATH = "../stringz_full.txt"
-STRINGZ_PATCH_FILEPATH = "../stringz_patch.txt"
+TRANSLATION_FILEPATH = "./translation.json"
+STRINGZ_FULL_FILEPATH = "./stringz_full.txt"
+STRINGZ_PATCH_FILEPATH = "./stringz_patch.txt"
 
 try:
 	translation, translation_settings = get_translation(TRANSLATION_FILEPATH)
