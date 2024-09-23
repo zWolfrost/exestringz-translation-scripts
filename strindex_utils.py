@@ -1,5 +1,8 @@
 import json
 
+STRINDEX_FULL_FILEPATH = "./strindex_full.txt"
+TRANSLATION_FILEPATH = "./translation.json"
+
 def get_strindex_full(filepath: str) -> tuple[list[str], list[str]]:
 	with open(filepath, 'r', encoding='utf-8', errors='ignore') as strindex_full:
 		strindex_offsets = []
@@ -18,11 +21,7 @@ def get_strindex_full(filepath: str) -> tuple[list[str], list[str]]:
 def get_translation(filepath: str) -> tuple[dict[str, str], dict[str, str]]:
 	with open(filepath, 'r', encoding='utf-8') as f:
 		translation: dict[str, str] = json.loads(f.read())
-
-	settings = translation[""]
-	del translation[""]
-
-	return translation, settings
+	return translation
 
 def slice_offsets(offsets: str, start = None, end = None) -> str:
 	if start is None and end is None:
@@ -36,3 +35,6 @@ def replace_with_table(string: str, table: dict[str, str]) -> str:
 	for key, value in table.items():
 		string = string.replace(key, value)
 	return string
+
+def clean_line(line: str) -> str:
+	return line.replace('\n', '\\n').replace('\t', '\\t').replace('\r', '\\r')
