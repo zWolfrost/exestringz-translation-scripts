@@ -1,7 +1,8 @@
 # This script allows you to create the "stringz_filter.txt" file, starting from the "stringz_full.txt" file (all the game strings).
 # The "stringz_filter.txt" file will contain only the target language strings, useful for quickly sorting the strings to be translated.
+import re
 from lingua import IsoCode639_1, LanguageDetectorBuilder
-from utils import get_stringz_full, get_translation, clean_dialog
+from utils import get_stringz_full, get_translation
 
 
 # Open the files
@@ -21,17 +22,20 @@ except FileNotFoundError as e:
 languages = [getattr(IsoCode639_1, code.upper()) for code in translation_settings["possible_languages"]]
 detector = LanguageDetectorBuilder.from_iso_codes_639_1(*languages).build()
 
-CHAR_WHITELIST = """\n !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^`abcdefghijklmnopqrstuvwxyz{|}~ ¡ª¿ÀÁÂÃÄÆÇÈÉÊËÍÎÏÑÓÔÕÖÙÚÛÜßàáâãäæçèéêëíîïñóôõöùúûüŒœЁАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяёẞ‐‑‒–—―…⁃"""
+CHAR_WHITELIST = translation_settings.get("dialog_char_whitelist", None)
 
 with open(STRINGZ_FILTER_FILEPATH, 'a', encoding='utf-8') as stringz_filter:
 	stringz_filter.truncate(0)
-	stringz_filter.write('_' * 80 + translation_settings.get("description", ""))
+	stringz_filter.write('_' * 80 + translation_settings.get("description", "https://github.com/zWolfrost/exestringz_translation_scripts"))
 
 	for stringz_index in range(len(stringz_lines)):
 		line = stringz_lines[stringz_index]
-		if line and line not in translation and all(ch in CHAR_WHITELIST for ch in line):
-			confidence = detector.compute_language_confidence_values(clean_dialog(line))[0]
+		if line and line not in translation and (not CHAR_WHITELIST or all(ch in CHAR_WHITELIST for ch in line)):
+			line_clean = re.sub(translation_settings.get("dialog_remove_pattern", ""), "", line)
+			confidence = detector.compute_language_confidence_values(line_clean)[0]
 			if confidence.language.iso_code_639_1 == getattr(IsoCode639_1, translation_settings["from_language"].upper()) and confidence.value > 0.5:
 				stringz_filter.write(f"\n{stringz_offsets[stringz_index]}___{confidence.value:.2f}\n{line}")
 
 		print(round(stringz_index / len(stringz_lines) * 100), end='%\r')
+
+print(f"Saved in '{STRINGZ_FILTER_FILEPATH}'.")

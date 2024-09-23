@@ -32,7 +32,7 @@ for line, count in translation_counter.items():
 # Create the "stringz_patch.txt" file
 with open(STRINGZ_PATCH_FILEPATH, 'a', encoding='utf-8') as stringz_patch:
 	stringz_patch.truncate(0)
-	stringz_patch.write('_' * 80 + translation_settings.get("description", ""))
+	stringz_patch.write('_' * 80 + translation_settings.get("description", "https://github.com/zWolfrost/exestringz_translation_scripts"))
 
 	stringz_index = 0
 	for line in translation:
@@ -43,8 +43,8 @@ with open(STRINGZ_PATCH_FILEPATH, 'a', encoding='utf-8') as stringz_patch:
 			continue
 
 		offsets = slice_offsets(stringz_offsets[stringz_index], *translation_settings.get("offsets_slice", {}).get(line, []))
-		line_translated = replace_with_table(translation[line], translation_settings.get("string_replace", {}))
+		line_translated = replace_with_table(translation[line], translation_settings.get("dialog_replace", {}))
 
 		stringz_patch.write('\n' + offsets + '\n' + line_translated)
 
-print("Done.")
+print(f"Saved in '{STRINGZ_PATCH_FILEPATH}'.")

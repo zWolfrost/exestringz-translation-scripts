@@ -36,6 +36,3 @@ def replace_with_table(string: str, table: dict[str, str]) -> str:
 	for key, value in table.items():
 		string = string.replace(key, value)
 	return string
-
-def clean_dialog(line: str) -> str:
-	return re.sub(r'\[.*?\]|\*', '', line)
