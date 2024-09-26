@@ -23,7 +23,7 @@ def main():
 
 	with open(STRINDEX_FILTER_FILEPATH, 'a', encoding='utf-8') as strindex_filter:
 		strindex_filter.truncate(0)
-		strindex_filter.write('_' * 80 + translation.get("header", "https://github.com/zWolfrost/exestringz_translation_scripts"))
+		strindex_filter.write('_' * 80 + "FILTER")
 
 		for strindex_index in range(len(strindex_lines)):
 			line = strindex_lines[strindex_index]
@@ -34,6 +34,14 @@ def main():
 					strindex_filter.write(f"\n{strindex_offsets[strindex_index]}___{confidence.value:.2f}\n{line}")
 
 			print(round(strindex_index / len(strindex_lines) * 100), end='%\r')
+
+		strindex_filter.write('\n' * 4 + '_' * 80 + "REVERSE FILTER")
+
+		for line in translation["patch"]:
+			line_clean = re.sub(translation.get("filter_pattern", ""), "", line)
+			confidence = detector.compute_language_confidence_values(line_clean)[0]
+			if confidence.language.iso_code_639_1 != getattr(IsoCode639_1, translation["source_language"].upper()) and confidence.value > 0.5:
+				strindex_filter.write('\n' + '_' * 80 + f"{confidence.language}\n{line}")
 
 	print(f"Saved in '{STRINDEX_FILTER_FILEPATH}'.")
 
