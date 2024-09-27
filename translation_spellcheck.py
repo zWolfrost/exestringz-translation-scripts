@@ -13,7 +13,6 @@ def main():
 		print(f"File '{e.filename}' not found.")
 		exit(1)
 
-
 	# Find spelling and grammar errors
 	lang = LanguageTool(translation["target_language"])
 	with open(TRANSLATION_SPELLCHECK_FILEPATH, 'a', encoding='utf-8') as spellcheck:

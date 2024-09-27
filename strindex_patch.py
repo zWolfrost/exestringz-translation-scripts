@@ -12,9 +12,8 @@ def main():
 		print(f"File '{e.filename}' not found.")
 		exit(1)
 
-
 	# Check the translation for missing or duplicate lines
-	translation_counter = {l: 0 for l in translation["patch"]}
+	translation_counter = {line: 0 for line in translation["patch"]}
 	for line in strindex_lines:
 		if line in translation["patch"]:
 			translation_counter[line] += 1
@@ -24,7 +23,6 @@ def main():
 			del translation["patch"][line]
 		elif count >= 2:
 			print(f"The following line is present multiple times:\n{line}\n")
-
 
 	# Create the strindex patch
 	with open(STRINDEX_PATCH_FILEPATH, 'a', encoding='utf-8') as strindex_patch:

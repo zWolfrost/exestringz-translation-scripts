@@ -14,7 +14,6 @@ def main():
 		print(f"File '{e.filename}' not found.")
 		exit(1)
 
-
 	# Filter the strindex in the desired language
 	languages = [getattr(IsoCode639_1, code.upper()) for code in translation["possible_languages"]]
 	detector = LanguageDetectorBuilder.from_iso_codes_639_1(*languages).build()
